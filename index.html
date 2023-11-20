@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="scripts.js">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Veterinaria Rodriguez - Inicio</title>
+</head>
+<body>
+                    <!--  encabezado  -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="Titulo w-100">
+            <div class="header-container d-flex justify-content-between align-items-center">
+                <a class="navbar-brand" href="index.html">Veterinaria Rodriguez</a>
+                <div class="d-flex">
+                    <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#loginModal">
+                        Iniciar sesión
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">P1</a>
+                            <a class="dropdown-item" href="#">P2</a>
+                            <a class="dropdown-item" href="#">P3</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+                      <!--  Modal iniciar sesion  -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Iniciar sesión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form>
+                        <div class="form-group">
+                            <label for="username">Usuario:</label>
+                            <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <!--  Modal registrarse  -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registrarse</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control" id="email" placeholder="Ingrese su email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="container mt-5">
+        <h1>Bienvenidos a la Veterinaria Rodriguez</h1><br>
+        <img src="https://papelmatic.com/wp-content/uploads/2019/09/papelmatic-higiene-profesional-limpieza-desinfeccion-clinicas-veterinarias.jpg" alt="Clínica Veterinaria" class="img-fluid">
+        <br><br>
+        <p>Somos una veterinaria comprometida con el bienestar de tus mascotas. Nuestra clínica cuenta con un equipo de profesionales apasionados por los animales y dedicados a brindarles el mejor cuidado. Algunos de nuestros servicios incluyen:</p>
+        <ul>
+            <li>Consultas médicas</li>
+            <li>Vacunación y desparasitación</li>
+            <li>Cirugía general</li>
+            <li>Odontología veterinaria</li>
+            <li>Igiene</li>
+            <li>Atención de emergencias las 24 horas</li>
+            
+        </ul>
+        <p>En Veterinaria Rodriguez, tu mascota recibirá atención de alta calidad en un ambiente cálido y acogedor. Estamos comprometidos a mantener a tus amigos peludos felices y saludables. Siempre estamos disponibles para responder a tus preguntas y preocupaciones.</p>
+    </div>
+    <footer class="bg-dark text-white text-center p-3">
+        <p>San Nicolás de los Garza, N. L.</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/tupagina" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/tupagina" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com/tupagina" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>
