@@ -1,22 +1,29 @@
-<?php
-$servername = "localhost:3307"; // Puede ser "localhost" si está en el mismo servidor
-$username = "root";
-$password = "";
-$dbname = "BDVeterinaria";
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
-    echo("Conexion Exitosa");
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-    
-}
-?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  
 
 <?php
+ /* 
 include("conexion.php");
 
 // Manejar el inicio de sesión
@@ -53,4 +60,5 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset(
 
 // Cerrar conexión
 $conn->close();
+ */
 ?>
