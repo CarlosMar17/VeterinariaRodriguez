@@ -1,64 +1,36 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
 <?php
- /* 
+// Conectar a la base de datos
 include("conexion.php");
 
-// Manejar el inicio de sesión
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+// Obtener los datos del formulario de inicio de sesión
+$username = $_POST["usuario"];
+$password = $_POST["password"];
 
-    // Realizar la verificación en la base de datos (puedes usar contraseñas con hash)
-    $sql = "SELECT id FROM usuario WHERE NombreU = '$username' AND contraseña = '$password'";
-    $result = $conn->query($sql);
+// Verificar si el usuario existe
+$sql = "SELECT * FROM usuario WHERE NombreU='$username'";
+$result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        // Inicio de sesión exitoso
-        echo "Inicio de sesión exitoso";
-    } else {
-        // Credenciales incorrectas
-        echo "Usuario o contraseña incorrectos";
-    }
+// Verificar si hay errores en la consulta SQL
+if (!$result) {
+    echo "Error en la consulta: " . $conn->error;
+    return;
 }
 
-// Manejar el registro
-elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_POST["password"])) {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-
-    // Insertar nuevo usuario en la base de datos
-    $sql = "INSERT INTO usuario (NombreU, contraseña, EmailU) VALUES ('$username', '$password', '$email')";
-    if ($conn->query($sql) === TRUE) {
-        echo "Registro exitoso";
-    } else {
-        echo "Error al registrar usuario: " . $conn->error;
-    }
+// Verificar si se encontró un usuario
+if ($result->num_rows === 0) {
+    echo "Usuario no encontrado";
+    return;
 }
 
-// Cerrar conexión
-$conn->close();
- */
+// Obtener la fila de resultados
+$row = $result->fetch_assoc();
+
+// Validar que la contraseña sea correcta
+if ($password !== $row['Contraseña']) {
+    echo "Contraseña incorrecta";
+    return;
+}
+
+// Inicio de sesión exitoso
+echo "Exito";
 ?>
