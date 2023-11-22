@@ -6,11 +6,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
     <title>Veterinaria Rodriguez - Inicio</title>
 </head>
 <body>
@@ -20,23 +18,26 @@
             <div class="header-container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand" href="index.html">Veterinaria Rodriguez</a>
                 <div class="d-flex">
-                    <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#loginModal">
+                    <button type="button" id="ISbotton" class="btn btn-primary mr-2" data-toggle="modal" data-target="#loginModal">
                         Iniciar sesión
                     </button>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Menu
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="DDMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu    
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">P1</a>
-                            <a class="dropdown-item" href="#">P2</a>
-                            <a class="dropdown-item" href="#">P3</a>
+                            <a class="dropdown-item" href="Noticias.html">Noticias</a>
+                            <a class="dropdown-item" href="Contacto.html">Contacto</a>
+                            <a class="dropdown-item" href="FQA.html">Preguntas frecuentes</a>
+                            <a class="dropdown-item" href="Servicios.html">Servicios</a>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
+
                       <!--  Modal iniciar sesion  -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -127,6 +128,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="scripts.js"></script>
+
     </body>
     </html>
 
