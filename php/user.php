@@ -19,5 +19,10 @@ if ($password !== $row['Contraseña']) {
     echo "Contraseña incorrecta";
     return;
 }
-echo "Exito";
+$response = array(
+    'status' => 'Exito',
+    'rolid' => $row['RolID']
+);
+
+echo json_encode($response);
 ?>
