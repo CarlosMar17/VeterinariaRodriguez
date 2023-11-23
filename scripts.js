@@ -141,4 +141,17 @@
             location.reload();
         });
     }
+
+
+    // funcion para Servicios
+
+
+
 });
+
+
+
+
+
+
+
