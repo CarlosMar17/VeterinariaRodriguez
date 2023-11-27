@@ -100,6 +100,26 @@
 
 
 
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Catálogo de Servicios</h1>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nombre del Servicio</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Precio</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-servicios">
+                <!-- Contenido dinámico cargado por JavaScript -->
+                '<td><button type="button" class="btn btn-primary agendar-cita solo-sesion" data-id="' + servicio.ID + '">Agendar Cita</button></td>' +
+
+            </tbody>
+        </table>
+    </div>
+
     <footer class="bg-dark text-white text-center p-3">
         <p>San Nicolás de los Garza, N. L.</p>
         <div class="social-icons">
@@ -113,7 +133,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="scripts.js"></script>
-
+    <script src="scriptsCaSe.js"></script>
     </body>
     </html>
 

@@ -1,8 +1,8 @@
 // Simulación de datos (puedes reemplazar esto con llamadas a una API o base de datos real)
 let servicios = [
-    { id: 1, nombre: 'Baño', productos: ['Shampoo', 'Acondicionador'], descripcion: 'El servicio incluye el baño de la mascota y peinado.', precio: 20, citas: 20 },
-    { id: 2, nombre: 'Corte de Pelo', productos: ['Tijeras', 'Peine'], descripcion: 'Descripción del corte de pelo.', precio: 30, citas: 15 },
-    { id: 3, nombre: 'Vacunación', productos: ['Vacuna', 'Jeringa'], descripcion: 'Descripción de la vacunación.', precio: 50, citas: 10 },
+    { id: 1, nombre: 'Baño', productos: ['Shampoo', 'Acondicionador'], descripcion: 'El servicio incluye el baño de la mascota y peinado.', precio: 200, citas: 2 },
+    { id: 2, nombre: 'Corte de Pelo', productos: ['Tijeras', 'Peine'], descripcion: 'Este servicio incluye el corte de pelo y peinado.', precio: 300, citas: 4 },
+    { id: 3, nombre: 'Vacunación', productos: ['Vacuna', 'Jeringa'], descripcion: 'Este servicio solo incluye la vacunacion de la mascota.', precio: 500, citas: 1 },
  // Puedes agregar más servicios según sea necesario
 ];
 
@@ -295,4 +295,3 @@ function nextPage() {
 
 // Mostrar servicios al cargar la página
 renderServices();
-

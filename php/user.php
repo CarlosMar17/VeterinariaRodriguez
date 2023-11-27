@@ -21,8 +21,8 @@ if ($password !== $row['Contraseña']) {
 }
 $response = array(
     'status' => 'Exito',
-    'rolid' => $row['RolID']
+    'rolid' => $row['RolID'],
+    'usuarioID' => $row['UsuarioID']
 );
-
 echo json_encode($response);
 ?>

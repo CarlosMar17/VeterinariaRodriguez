@@ -197,3 +197,8 @@ body {
 .details-table td {
     background-color: #fff;
 }
+
+
+.solo-sesion {
+    display: none;
+}
