@@ -1,298 +1,180 @@
-// Simulación de datos (puedes reemplazar esto con llamadas a una API o base de datos real)
-let servicios = [
-    { id: 1, nombre: 'Baño', productos: ['Shampoo', 'Acondicionador'], descripcion: 'El servicio incluye el baño de la mascota y peinado.', precio: 20, citas: 20 },
-    { id: 2, nombre: 'Corte de Pelo', productos: ['Tijeras', 'Peine'], descripcion: 'Descripción del corte de pelo.', precio: 30, citas: 15 },
-    { id: 3, nombre: 'Vacunación', productos: ['Vacuna', 'Jeringa'], descripcion: 'Descripción de la vacunación.', precio: 50, citas: 10 },
- // Puedes agregar más servicios según sea necesario
-];
-
-const formModal = document.getElementById('serviceFormModal');
-const serviceList = document.getElementById('serviceList');
-
-const itemsPerPage = 6;
-let currentPage = 1;
-
-// Función para mostrar los servicios en la tabla
-function renderServices() {
-    serviceList.innerHTML = '';
-
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentServices = servicios.slice(startIndex, endIndex);
-
-    currentServices.forEach((servicio) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>
-                <div class="service-cell" onclick="toggleDetails(${servicio.id})">
-                    <span>${servicio.nombre}</span>
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary"
-                            onclick="editService(${servicio.id}, event)">Editar</button>
-                        <button type="button" class="btn btn-danger"
-                            onclick="deleteService(${servicio.id})">Eliminar</button>
-                    </div>
-                </div>
-                <div class="details" id="details_${servicio.id}">
-                    <!-- Nueva tabla para detalles -->
-                    <table class="details-table">
-                        <tr>
-                            <th>Productos</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Agendados</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <ul>
-                                    ${servicio.productos.map(product => `<li>${product}</li>`).join('')}
-                                </ul>
-                            </td>
-                            <td>${servicio.descripcion}</td>
-                            <td>$${servicio.precio}</td>
-                            <td>${servicio.citas}</td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-        `;
-        serviceList.appendChild(row);
-    });
-
-    renderPagination();
-}
-
-// Función para abrir el modal al hacer clic en "Agregar Servicio"
-function openServiceModal() {
-    // Limpiar el formulario antes de mostrar el modal
-    formModal.reset();
-    document.getElementById('serviceIdModal').value = '';
-
-    // Mostrar el modal
-    $('#serviceModal').modal('show');
-}
-
-// Función para agregar o editar un servicio
-formModal.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const serviceName = document.getElementById('serviceNameModal').value;
-    const productList = document.getElementById('productListModal').value.split(',').map(item => item.trim());
-    const serviceDescription = document.getElementById('serviceDescriptionModal').value;
-    const servicePrice = parseFloat(document.getElementById('servicePriceModal').value);
-    const serviceAppointments = parseInt(document.getElementById('serviceAppointmentsModal').value);
-    const serviceId = document.getElementById('serviceIdModal').value;
-
-    if (serviceId) {
-        // Editar servicio existente
-        const existingService = servicios.find(s => s.id == serviceId);
-        existingService.nombre = serviceName;
-        existingService.productos = productList;
-        existingService.descripcion = serviceDescription;
-        existingService.precio = servicePrice;
-        existingService.citas = serviceAppointments;
-    } else {
-        // Agregar nuevo servicio
-        const newService = {
-            id: servicios.length + 1,
-            nombre: serviceName,
-            productos: productList,
-            descripcion: serviceDescription,
-            precio: servicePrice || 0,
-            citas: serviceAppointments || 0,
-        };
-        servicios.push(newService);
-    }
-
-    // Limpiar el formulario
-    formModal.reset();
-    document.getElementById('serviceIdModal').value = '';
-
-    // Cerrar el modal
-    $('#serviceModal').modal('hide');
-
-    // Actualizar la tabla
-    renderServices();
+document.addEventListener('DOMContentLoaded', function () {
+    renderProductos();
 });
 
-// Función para editar un servicio
-function editService(id, event) {
-    // Detener la propagación del evento para que no se muestren los detalles
-    event.stopPropagation();
+function renderProductos() {
+    const productList = document.getElementById('productList');
 
-    const service = servicios.find(s => s.id == id);
-    document.getElementById('serviceNameModal').value = service.nombre;
-    document.getElementById('productListModal').value = service.productos.join(', ');
-    document.getElementById('serviceDescriptionModal').value = service.descripcion;
-    document.getElementById('servicePriceModal').value = service.precio;
-    document.getElementById('serviceAppointmentsModal').value = service.citas;
-    document.getElementById('serviceIdModal').value = service.id;
+    // Realizar una solicitud AJAX para obtener los productos
+    fetch('php/Productos.php')
+        .then(response => response.json())
+        .then(data => {
+            // Limpiar la lista de productos
+            productList.innerHTML = '';
 
-    // Mostrar el modal
-    $('#serviceModal').modal('show');
-}
+            // Llenar la lista de productos con los datos obtenidos
+            data.forEach(producto => {
+                const productContainer = document.createElement('div');
 
-// Función para eliminar un servicio
-function deleteService(id) {
-    servicios = servicios.filter(s => s.id != id);
-    renderServices();
-}
+                // Botón desplegable con estilos Bootstrap
+                const productButton = document.createElement('button');
+                productButton.classList.add('btn', 'btn-link', 'btn-block', 'text-left');
+                productButton.setAttribute('type', 'button');
+                productButton.setAttribute('data-toggle', 'collapse');
+                productButton.setAttribute('data-target', `#collapse${producto.ProdID}`);
+                productButton.setAttribute('aria-expanded', 'false');
+                productButton.setAttribute('aria-controls', `collapse${producto.ProdID}`);
+                productButton.innerHTML = producto.Nombre;
 
-// Función para mostrar u ocultar los detalles al hacer clic en el botón
-function toggleDetails(id) {
-    const details = document.getElementById(`details_${id}`);
-    details.style.display = (details.style.display === 'block') ? 'none' : 'block';
-}
+                // Contenido desplegable
+                const collapseDiv = document.createElement('div');
+                collapseDiv.classList.add('collapse');
+                collapseDiv.setAttribute('id', `collapse${producto.ProdID}`);
 
-// Función para renderizar la lista de productos
-function renderProductList(products) {
-    return products.map(product => `<p>${product}</p>`).join('');
-}
+                // Tabla de información
+                const table = document.createElement('table');
+                table.classList.add('table', 'mt-2');
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${producto.Nombre}</td>
+                            <td>${producto.Descripcion}</td>
+                            <td>${producto.Precio}</td>
+                            <td>${producto.Cantidad}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" onclick="editProduct(${producto.ProdID})">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${producto.ProdID})">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                `;
 
-// Función para filtrar los servicios en la tabla
-function filterServices() {
-    const searchInput = document.getElementById('searchInput');
-    const searchText = searchInput.value.toLowerCase();
+                // Agregar elementos al contenedor principal
+                collapseDiv.appendChild(table);
+                productContainer.appendChild(productButton);
+                productContainer.appendChild(collapseDiv);
 
-    const filteredServices = servicios.filter(service => service.nombre.toLowerCase().includes(searchText));
-
-    // Actualizar la tabla con los servicios filtrados
-    renderFilteredServices(filteredServices);
-}
-
-// Función para mostrar los servicios filtrados en la tabla
-function renderFilteredServices(filteredServices) {
-    serviceList.innerHTML = '';
-    filteredServices.forEach((servicio) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <td>
-        <div class="service-cell" onclick="toggleDetails(${servicio.id})">
-            <span>${servicio.nombre}</span>
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-primary"
-                    onclick="editService(${servicio.id}, event)">Editar</button>
-                <button type="button" class="btn btn-danger"
-                    onclick="deleteService(${servicio.id})">Eliminar</button>
-            </div>
-        </div>
-        <div class="details" id="details_${servicio.id}">
-            <!-- Nueva tabla para detalles -->
-            <table class="details-table">
-                <tr>
-                    <th>Productos</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Agendados</th>
-                </tr>
-                <tr>
-                    <td>
-                        <ul>
-                            ${servicio.productos.map(product => `<li>${product}</li>`).join('')}
-                        </ul>
-                    </td>
-                    <td>${servicio.descripcion}</td>
-                    <td>$${servicio.precio}</td>
-                    <td>${servicio.citas}</td>
-                </tr>
-            </table>
-        </div>
-    </td>
-`;
-        serviceList.appendChild(row);
-    });
-}
-
-// Función para renderizar el paginador
-function renderPagination() {
-    const totalPages = Math.ceil(servicios.length / itemsPerPage);
-    const maxVisiblePages = 10; // Número máximo de páginas visibles a la vez
-    const paginationContainer = document.querySelector('.pagination-container');
-    paginationContainer.innerHTML = '';
-
-    const ul = document.createElement('ul');
-    ul.classList.add('pagination');
-
-    // Botón Página Anterior
-    const prevButton = document.createElement('li');
-    prevButton.classList.add('page-item');
-    const prevButtonLink = document.createElement('button');
-    prevButtonLink.textContent = 'Anterior';
-    prevButtonLink.classList.add('page-link');
-    prevButtonLink.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderServices();
+                productList.appendChild(productContainer);
+            });
+        })
+        .catch(error => console.error('Error fetching products:', error));
+        function addProduct() {
+            const nombre = document.getElementById('nombre').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const precio = document.getElementById('precio').value;
+            const cantidad = document.getElementById('cantidad').value;
+        
+            // Realizar una solicitud AJAX para agregar el producto
+            fetch('php/Productos.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    precio: precio,
+                    cantidad: cantidad,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Limpiar los campos después de agregar el producto
+                    document.getElementById('nombre').value = '';
+                    document.getElementById('descripcion').value = '';
+                    document.getElementById('precio').value = '';
+                    document.getElementById('cantidad').value = '';
+        
+                    // Volver a renderizar la lista de productos
+                    renderProductos();
+                } else {
+                    console.error('Error adding product:', data.error);
+                }
+            })
+            .catch(error => console.error('Error adding product:', error));
         }
-    });
-    prevButton.appendChild(prevButtonLink);
-    ul.appendChild(prevButton);
-
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-    if (endPage - startPage + 1 < maxVisiblePages) {
-        startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-        const li = document.createElement('li');
-        li.classList.add('page-item');
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.classList.add('page-link');
-
-        if (i === currentPage) {
-            button.classList.add('active');
+        
+        function editProduct(prodID) {
+            // Obtener los datos del producto para editar
+            fetch(`php/Productos.php${prodID}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Almacenar el ProdID en una variable
+                    const editedProductID = data.ProdID;
+        
+                    // Rellenar los campos de edición con los datos del producto
+                    document.getElementById('editProductID').value = editedProductID;
+                    document.getElementById('editNombre').value = data.Nombre;
+                    document.getElementById('editDescripcion').value = data.Descripcion;
+                    document.getElementById('editPrecio').value = data.Precio;
+                    document.getElementById('editCantidad').value = data.Cantidad;
+        
+                    // Abrir el modal de edición
+                    $('#editProductModal').modal('show');
+                })
+                .catch(error => console.error('Error fetching product details:', error));
         }
-
-        button.addEventListener('click', () => {
-            currentPage = i;
-            renderServices();
-            renderPagination(); // Añadir esta línea para actualizar la paginación después de cambiar la página
-        });
-
-        li.appendChild(button);
-        ul.appendChild(li);
-    }
-
-    // Botón Página Siguiente
-    const nextButton = document.createElement('li');
-    nextButton.classList.add('page-item');
-    const nextButtonLink = document.createElement('button');
-    nextButtonLink.textContent = 'Siguiente';
-    nextButtonLink.classList.add('page-link');
-    nextButtonLink.addEventListener('click', () => {
-        const totalPages = Math.ceil(servicios.length / itemsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderServices();
-            renderPagination(); // Añadir esta línea para actualizar la paginación después de cambiar la página
+        
+        function updateProduct() {
+            const prodID = document.getElementById('editProductID').value;
+            const nombre = document.getElementById('editNombre').value;
+            const descripcion = document.getElementById('editDescripcion').value;
+            const precio = document.getElementById('editPrecio').value;
+            const cantidad = document.getElementById('editCantidad').value;
+        
+            // Realizar una solicitud AJAX para actualizar el producto
+            fetch('php/Productos.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: prodID,
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    precio: precio,
+                    cantidad: cantidad,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Cerrar el modal de edición
+                    $('#editProductModal').modal('hide');
+                    // Volver a renderizar la lista de productos
+                    renderProductos();
+                } else {
+                    console.error('Error updating product:', data.error);
+                }
+            })
+            .catch(error => console.error('Error updating product:', error));
         }
-    });
-    nextButton.appendChild(nextButtonLink);
-    ul.appendChild(nextButton);
-
-    paginationContainer.appendChild(ul);
+        
+        function deleteProduct(prodID) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                // Realizar una solicitud AJAX para eliminar el producto
+                fetch(`php/Productos.php${prodID}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Volver a renderizar la lista de productos
+                            renderProductos();
+                        } else {
+                            console.error('Error deleting product:', data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error deleting product:', error));
+            }
+        }
 }
-
-// Función para ir a la página anterior
-function prevPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        renderServices();
-    }
-}
-
-// Función para ir a la página siguiente
-function nextPage() {
-    const totalPages = Math.ceil(servicios.length / itemsPerPage);
-    if (currentPage < totalPages) {
-        currentPage++;
-        renderServices();
-    }
-}
-
-// Mostrar servicios al cargar la página
-renderServices();
 

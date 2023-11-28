@@ -58,8 +58,6 @@
                     } else if (response.status === "Exito") {
                         var rolid = response.rolid;
                         var usuarioID = response.usuarioID;
-                        console.log("Rolid: " + rolid);
-                        console.log("UsuarioID: " + usuarioID);
                         var RolBoton;
                         if (rolid === "2") {
                             RolBoton = "Col." + usuario;
@@ -72,7 +70,7 @@
                         var userData = {
                             nombreUsuario: RolBoton,
                             rolid: rolid,
-                            usuarioID: usuarioID // Nuevo: almacenar el UsuarioID
+                            usuarioID: usuarioID 
                         };
         
                         // Cambio boton
@@ -86,7 +84,6 @@
                                 ${RolBoton}
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="Administracion.html">Administracion</a>
                                 <a class="dropdown-item" href="GestionC.html">Gestor de citas</a>
                                 ${rolid === "2" || rolid === "3" ? '<a class="dropdown-item" href="Inventario.html">Inventario</a>' : ''}
                                 <a class="dropdown-item" id="logoutLink" href="#">Cerrar sesión</a>
@@ -105,7 +102,6 @@
                             location.reload();
                         });
         
-                        // Llamar a cargarServicios después de iniciar sesión
                         cargarServicios();
                     }
                 },
@@ -127,7 +123,6 @@
                         ${nombreUsuario} <!-- Cambiado de RolBoton a nombreUsuario -->
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="Administracion.html">Administracion</a>
                         <a class="dropdown-item" href="GestionC.html">Gestor de citas</a>
                         ${rolid === "2" || rolid === "3" ? '<a class="dropdown-item" href="Inventario.html">Inventario</a>' : ''}
                         <a class="dropdown-item" id="logoutLink" href="#">Cerrar sesión</a>
@@ -146,10 +141,10 @@
                 location.reload();
 
                                 // Mostrar u ocultar botones según el tipo de usuario o condición
-                    if (rolid === "1" || rolid === "2" || rolid === "3") { // Cambia esto según la lógica de tu aplicación
-                        $('.solo-sesion').show();  // Muestra botones solo para usuarios autenticados
+                    if (rolid === "1" || rolid === "2" || rolid === "3") { 
+                        $('.solo-sesion').show();  
                     } else {
-                        $('.solo-sesion').hide();  // Oculta botones para otros tipos de usuarios
+                        $('.solo-sesion').hide();  
                     }
                 
             });

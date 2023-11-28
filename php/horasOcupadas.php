@@ -3,7 +3,6 @@ include("conexion.php");
 
 $fechaSeleccionada = $_POST['fechaSeleccionada'];
 
-// Obtener las horas ya ocupadas para la fecha seleccionada
 $sqlHorasOcupadas = "SELECT HOUR(`Descripcion`) AS hora FROM `fecha y hora` WHERE DATE(`Descripcion`) = '$fechaSeleccionada'";
 $resultHorasOcupadas = $conn->query($sqlHorasOcupadas);
 
@@ -15,9 +14,7 @@ if ($resultHorasOcupadas->num_rows > 0) {
     }
 }
 
-// Devolver las horas ocupadas como JSON
 echo json_encode($horasOcupadas);
 
-// Cerrar la conexión
 $conn->close();
 ?>

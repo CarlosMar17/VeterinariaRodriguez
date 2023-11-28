@@ -4,12 +4,15 @@ include("conexion.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener el UsuarioID del POST
     $usuarioID = $_POST["usuarioID"];
-    echo "Usuario ID: " . $usuarioID;
 
     // Hacer una consulta para obtener las citas del usuario desde la base de datos
-    $sql = "SELECT * FROM cita WHERE UsuarioID = $usuarioID";
+    $sql = "SELECT c.CitaID, c.Nombre, fh.Descripcion, c.Comentarios, c.Email, c.Telefono, s.Nombre AS NombreServicio, c.UsuarioID
+            FROM cita c
+            INNER JOIN `fecha y hora` fh ON c.FyHID = fh.FyHID
+            INNER JOIN servicio s ON c.ServID = s.ServID
+            WHERE c.UsuarioID = $usuarioID";
+
     $result = $conn->query($sql);
-    echo "Número de filas: " . $result->num_rows;
 
     if ($result->num_rows > 0) {
         // Convertir el resultado a un array asociativo

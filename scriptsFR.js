@@ -19,8 +19,10 @@ document.getElementById("agendarCitaButton").addEventListener("click", function(
     // Obtener los valores de los campos del formulario
     var nombre = document.getElementById("nombre").value;
     var email = document.getElementById("Email").value;
+    var telefono = document.getElementById("telefono").value;
     var fecha = document.getElementById("fecha").value;
     var hora = document.getElementById("hora").value;
+    var descripcion = document.getElementById("descripcion").value;
 
     // Combina fecha y hora en un formato DATETIME
     var fechaYHora = fecha + ' ' + hora;
@@ -42,25 +44,25 @@ document.getElementById("agendarCitaButton").addEventListener("click", function(
         }
     }
 
-    // Verificar si la hora ya está ocupada en la tabla "fecha y hora"
     if (horaOcupada(fechaYHora)) {
         alert("La hora seleccionada ya está ocupada. Por favor, elige otra.");
         return;
     }
 
-    // Enviar los datos al archivo PHP utilizando AJAX
     $.ajax({
         type: "POST",
         url: "php/FReserva.php",
         data: {
             nombre: nombre,
             email: email,
+            telefono: telefono,
+            descripcion: descripcion,  
             fechaYHora: fechaYHora,
             servicioID: servicioID,
             usuarioID: usuarioID
         },
         success: function(response) {
-            alert(response); // Muestra la respuesta del servidor en una alerta (puedes cambiar esto)
+            alert(response); 
         },
         error: function(xhr, status, error) {
             console.error("Error en la solicitud AJAX: " + status, error);
@@ -68,7 +70,6 @@ document.getElementById("agendarCitaButton").addEventListener("click", function(
     });
 });
 
-// Función para verificar si la hora está ocupada en la tabla "fecha y hora"
 function horaOcupada(fechaYHora) {
     var ocupada = false;
 
@@ -89,7 +90,6 @@ function horaOcupada(fechaYHora) {
     return ocupada;
 }
 
-// Función para cargar las horas disponibles basándose en las fechas existentes
 function cargarHorasDisponibles() {
     var fechaSeleccionada = document.getElementById("fecha").value;
 
@@ -99,20 +99,20 @@ function cargarHorasDisponibles() {
         url: "php/horasOcupadas.php",
         data: { fechaSeleccionada: fechaSeleccionada },
         success: function(response) {
-            // Parsear la respuesta como JSON
+            
             var horasOcupadas = JSON.parse(response);
 
-            // Obtener el elemento del selector de horas
+            
             var selectorHora = document.getElementById("hora");
 
-            // Limpiar las opciones existentes
+            
             selectorHora.innerHTML = "";
 
-            // Añadir las opciones disponibles
+            
             for (var i = 8; i <= 19; i++) {
                 var horaFormateada = i.toString().padStart(2, '0') + ":00";
 
-                // Solo añadir la hora si no está ocupada
+                
                 if (!horasOcupadas.includes(horaFormateada)) {
                     var opcion = document.createElement("option");
                     opcion.value = horaFormateada;
@@ -127,10 +127,8 @@ function cargarHorasDisponibles() {
     });
 }
 
-// Evento al cambiar la fecha para cargar las horas disponibles
 document.getElementById("fecha").addEventListener("change", function() {
     cargarHorasDisponibles();
 });
 
-// Cargar las horas disponibles al cargar la página
 cargarHorasDisponibles();

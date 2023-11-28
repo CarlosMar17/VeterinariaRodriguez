@@ -4,6 +4,8 @@ include("conexion.php");
 // Obtener datos del formulario
 $nombre = $_POST['nombre'];
 $email = $_POST['email'];
+$telefono = $_POST['telefono'];
+$descripcion = $_POST['descripcion'];
 $fechaYHora = $_POST['fechaYHora'];
 $servicioID = $_POST['servicioID'];
 $usuarioID = $_POST['usuarioID'];
@@ -22,7 +24,7 @@ if ($resultFechaExistente->num_rows > 0) {
         $fyhID = $conn->insert_id;
 
         // Insertar datos en la tabla "cita"
-        $sqlCita = "INSERT INTO `cita` (`Nombre`, `FyHID`, `Email`, `ServID`, `UsuarioID`) VALUES ('$nombre', '$fyhID', '$email', '$servicioID', '$usuarioID')";
+        $sqlCita = "INSERT INTO `cita` (`Nombre`, `FyHID`, `Comentarios`, `Email`, `Telefono`, `ServID`, `UsuarioID`) VALUES ('$nombre', '$fyhID', '$descripcion', '$email', '$telefono', '$servicioID', '$usuarioID')";
         if ($conn->query($sqlCita) === TRUE) {
             echo "Cita agendada exitosamente";
         } else {
