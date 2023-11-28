@@ -18,7 +18,6 @@ function mostrarOcultarBotonesSesion() {
     }
 }
 
-
 $(document).ready(function () {
     cargarServicios();
 });
@@ -30,19 +29,20 @@ function cargarServicios() {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
+            console.log('Datos de servicios recibidos:', data);
+
             // Limpiar la tabla antes de agregar nuevos datos
             $('#tabla-servicios').empty();
 
             // Agregar cada servicio a la tabla
             $.each(data, function (index, servicio) {
                 $('#tabla-servicios').append(
-                    '<tr>' +
-                    '<td>' + servicio.ID + '</td>' +
-                    '<td>' + servicio.Nombre + '</td>' +
-                    '<td>' + servicio.Descripcion + '</td>' +
-                    '<td>' + servicio.Precio + ' €</td>' +
-                    '<td><button type="button" class="btn btn-primary agendar-cita solo-sesion" data-id="' + servicio.ID + '">Agendar Cita</button></td>' +
-                    '</tr>'
+                    "<tr>" +
+                    "<td>" + servicio.Nombre + "</td>" +
+                    "<td>" + servicio.Descripcion + "</td>" +
+                    "<td>" + servicio.Precio + " €</td>" +
+                    '<td><button type="button" class="btn btn-primary agendar-cita solo-sesion" data-id="' + servicio.ServID + '">Agendar Cita</button></td>' +
+                    "</tr>"
                 );
             });
 
@@ -60,9 +60,11 @@ function cargarServicios() {
             // Mostrar u ocultar botones según la sesión de usuario
             mostrarOcultarBotonesSesion();
         },
-        error: function (error) {
-            console.log('Error al cargar los servicios:', error);
+        error: function (xhr, status, error) {
+            console.log('Error al cargar los servicios:', status, error);
+
+            // Puedes agregar más detalles del error si es necesario
+            console.log('Respuesta completa:', xhr.responseText);
         }
     });
 }
-

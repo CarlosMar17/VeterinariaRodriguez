@@ -1,30 +1,38 @@
 <?php
 include("conexion.php");
 
-// Verificar si se recibieron datos del formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // Obtener los datos del formulario
-    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-    $email = mysqli_real_escape_string($conn, $_POST['Email']);
-    $fecha = mysqli_real_escape_string($conn, $_POST['fecha']);
-    $hora = mysqli_real_escape_string($conn, $_POST['hora']);
+// Obtener datos del formulario
+$nombre = $_POST['nombre'];
+$email = $_POST['email'];
+$fechaYHora = $_POST['fechaYHora'];
+$servicioID = $_POST['servicioID'];
+$usuarioID = $_POST['usuarioID'];
 
-    // Recuperar el servicioID desde LocalStorage
-    $servicioID = $_POST['servicioID'];
+// Verificar si la fecha ya está capturada en la tabla
+$sqlFechaExistente = "SELECT FyHID FROM `fecha y hora` WHERE `Descripcion` = '$fechaYHora'";
+$resultFechaExistente = $conn->query($sqlFechaExistente);
 
-    // Sentencia SQL para insertar datos en la tabla cita (asumiendo que CitaID es autoincremental)
-    $sql = "INSERT INTO cita (Nombre, `Fecha y hora`, Email, ServID) VALUES ('$nombre', '$fecha $hora', '$email', '$servicioID')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Cita agendada correctamente.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+if ($resultFechaExistente->num_rows > 0) {
+    echo "La fecha y hora seleccionadas ya están ocupadas. Por favor, elige otra.";
 } else {
-    echo "Acceso no permitido.";
+    // Insertar datos en la tabla "fecha y hora"
+    $sqlFechaHora = "INSERT INTO `fecha y hora` (`Descripcion`) VALUES ('$fechaYHora')";
+    if ($conn->query($sqlFechaHora) === TRUE) {
+        // Obtener el FyHID recién insertado
+        $fyhID = $conn->insert_id;
+
+        // Insertar datos en la tabla "cita"
+        $sqlCita = "INSERT INTO `cita` (`Nombre`, `FyHID`, `Email`, `ServID`, `UsuarioID`) VALUES ('$nombre', '$fyhID', '$email', '$servicioID', '$usuarioID')";
+        if ($conn->query($sqlCita) === TRUE) {
+            echo "Cita agendada exitosamente";
+        } else {
+            echo "Error al agendar la cita: " . $conn->error;
+        }
+    } else {
+        echo "Error al insertar fecha y hora: " . $conn->error;
+    }
 }
 
-// Cerrar la conexión a la base de datos
+// Cerrar la conexión
 $conn->close();
 ?>

@@ -199,6 +199,11 @@ body {
 }
 
 
+/* Estilos Funciones */
 .solo-sesion {
     display: none;
+}
+
+.fecha-no-disponible {
+    border: 2px solid red;
 }
