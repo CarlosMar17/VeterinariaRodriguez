@@ -62,7 +62,7 @@ if ($action == 'get') {
     $precio = $data->precio;
     $cantidad = $data->cantidad;
 
-    $sql = "UPDATE producto SET Nombre=?, Descripcion=?, Precio=?, Cantidad=? WHERE ProdID=?";
+    $sql = "UPDATE producto SET Nombre=?, Descripcion=?, Precio=?, Cantidad=? WHERE ProdID=?";    
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssdii", $nombre, $descripcion, $precio, $cantidad, $prodID);
     $result = $stmt->execute();

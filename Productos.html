@@ -99,8 +99,6 @@
     </div>
 
 
-
-
     <h2>Productos</h2>
 
     <div class="container mt-5">
@@ -121,7 +119,7 @@
                 <label for="precio">Precio:</label>
                 <input type="number" class="form-control" id="precio" required>
             </div>
-
+    
             <div class="form-group">
                 <label for="cantidad">Cantidad:</label>
                 <input type="number" class="form-control" id="cantidad" required>
@@ -129,12 +127,13 @@
             
             <button type="button" class="btn btn-primary" onclick="addProduct()">Agregar Producto</button>
         </form>
-
+    
         <div id="productList" class="mt-4">
-            <!-- La lista de productos se renderizará aquí -->
+            <!-- Aquí se mostrará la lista de productos -->
         </div>
-
+    
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <!-- Modal de edición de productos -->
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -170,12 +169,7 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-    
+        
     <footer class="bg-dark text-white text-center p-3">
         <p>San Nicolás de los Garza, N. L.</p>
         <div class="social-icons">
